@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/tabla.css">
+    <link rel="stylesheet" href="../CSS/formulario.css">
+    <title>Sections Games</title>
+</head>
+<body>
+    <!-- Botón para abrir el formulario modal de registro -->
+    <button id="openModalBtn">Registrar Videojuego</button>
+
+    <!-- Contenedor para el formulario modal de registro -->
+    <div id="form-container" class="modal-container">
+        <div class="modal-content">
+            <!-- Botón para cerrar el formulario modal -->
+            <span id="closeModalBtn" class="close-modal-btn" onclick="closeForm()">&times;</span>
+            <h4>Formulario Registro</h4>
+            <form id="form" class="form-register">
+                <input class="controls" type="text" name="IdV" id="IdV" placeholder="Ingrese el id">
+                <input class="controls" type="text" name="Nombre" id="Nombre" placeholder="Ingrese el Nombre">
+                <input class="controls" type="text" name="Precio" id="Precio" placeholder="Ingrese el Precio">
+                <p>Estoy de acuerdo con <a href="#">Términos y Condiciones</a></p>
+                <input class="botons" type="submit" value="Registrar">
+                <p><a href="#">¿Ya tengo Cuenta?</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Botón para abrir el formulario modal de eliminación -->
+    <button id="deleteModalBtn">Eliminar Videojuego</button>
+
+    <!-- Contenedor para el formulario modal de eliminación -->
+    <div id="delete-form-container" class="modal-container" style="display:none;">
+        <div class="modal-content">
+            <!-- Campos para eliminar -->
+            <form id="delete-form" class="form-register">
+                <input class="controls" type="text" name="delete-IdV" id="delete-IdV" placeholder="ID del Videojuego a Eliminar">
+                <input class="botons" type="submit" value="Eliminar">
+            </form>
+        </div>
+    </div>
+
+    <!-- Contenedor para mensajes de éxito o error -->
+    <div id="message-container" class="message-container" style="display:none;"></div>
+
+    <!-- Contenedor para la tabla -->
+    <div id="table-container">
+        <table id="product-table">
+            <thead>
+                <tr>
+                    <th>IdV</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Filas de la tabla se agregarán aquí -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Script para cargar el formulario emergente -->
+    <script>
+        function loadForm() {
+            const formContainer = document.getElementById("form-container");
+            formContainer.style.display = "block";
+        }
+
+        const openModalBtn = document.getElementById("openModalBtn");
+        openModalBtn.addEventListener("click", loadForm);
+
+        function closeForm() {
+            const formContainer = document.getElementById("form-container");
+            formContainer.style.display = "none";
+        }
+
+        function zoomButton() {
+            const submitButton = document.querySelector(".botons");
+            submitButton.style.transform = "scale(1.1)"; // Hace que el botón se agrande al 110%
+            setTimeout(() => {
+                submitButton.style.transform = "scale(1)"; // Restaura el tamaño normal del botón después de un tiempo
+            }, 200);
+        }
+
+        // Función para abrir el formulario modal de eliminación
+        function openDeleteForm() {
+            const deleteFormContainer = document.getElementById("delete-form-container");
+            deleteFormContainer.style.display = "block";
+        }
+
+        const deleteModalBtn = document.getElementById("deleteModalBtn");
+        deleteModalBtn.addEventListener("click", openDeleteForm);
+
+        // Función para cerrar el formulario modal de eliminación
+        function closeDeleteForm() {
+            const deleteFormContainer = document.getElementById("delete-form-container");
+            deleteFormContainer.style.display = "none";
+        }
+    </script>
+
+    <!-- Script para cargar la tabla -->
+    <script src="../JS/tabla.js"></script>
+    <script src="../JS/POST.js"></script>
+</body>
+</html>
+
+

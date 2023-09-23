@@ -1,0 +1,249 @@
+-- Base de datos de Usuario, Videojuegos y compra (Tabla que anida las dos primeras).
+-- Tabla Usuario.
+
+create table Usuario (
+idU int primary key,
+nombreU varchar (20),
+correo varchar (60)
+);
+
+-- Se hacen las inserciones de esta tabla (Usuarios):
+
+insert into Usuario (idU, nombreU, correo) values (01, 'Cristian', 'Grey69@gmail.com');
+insert into Usuario (idU, nombreU, correo) values (02, 'Stiven', 'Pirrono@gmail.com');
+insert into Usuario (idU, nombreU, correo) values (03, 'Julen', 'Chupapi@gmail.com');
+insert into Usuario (idU, nombreU, correo) values (04, 'Gabriel', 'Arnold@gmail.com');
+insert into Usuario (idU, nombreU, correo) values (05, 'Kristopher', 'kristopher521@gmail.com');
+select * from Usuario
+
+-- Ahora los procedimientos almacenados:
+-- Registrar Usuario:
+
+create procedure registrarU (
+@idU Int,
+@nombreU varchar(20),
+@correo varchar(60)
+)
+as
+begin
+insert into Usuario (idU, nombreU, correo)
+values
+(
+@idU,
+@nombreU,
+@correo
+)
+end
+
+-- Actualizar Usuario:
+
+create procedure actualizarU (
+@idU Int,
+@nombreU varchar(20),
+@correo varchar(60)
+)
+as
+begin
+update Usuario set
+nombreU = @nombreU,
+correo = @correo
+where idU = @idU
+end
+
+-- Eliminar Usuario:
+
+create procedure eliminarU (
+@idU Int
+)
+as
+begin
+delete from Usuario where idU = @idU
+end
+
+-- Consultar Usuario:
+
+create procedure obtenerU 
+@idU Int
+as
+begin
+select * from Usuario where IdU = @idU
+end
+
+-- Listar Usuario:
+
+create procedure listarU 
+as
+begin
+select * from usuario
+end
+
+--------------------------------------------------------------
+
+-- Tabla Videojuegos:
+
+create table Videojuegos (
+IdV int primary key,
+Nombre varchar (70),
+Precio int
+);
+
+-- Inserciones:
+
+insert into Videojuegos (IdV, Nombre, Precio) values (1, 'God of war', '50000');
+insert into Videojuegos (IdV, Nombre, Precio) values (2, 'Far cry', '45000');
+insert into Videojuegos (IdV, Nombre, Precio) values (3, 'Grand Theft Auto', '45000');
+insert into Videojuegos (IdV, Nombre, Precio) values (4, 'Call of duty', '50000');
+insert into Videojuegos (IdV, Nombre, Precio) values (5, 'Nintendo 64', '50000');
+select * from 
+
+-- Procedimientos almacenados:
+-- Registrar Videojuego:
+
+create procedure registrarV(
+@IdV int,
+@Nombre varchar(70),
+@Precio int
+)
+as
+begin
+insert into Videojuegos (IdV, Nombre, Precio)
+values
+(
+@IdV,
+@Nombre,
+@Precio
+)
+end
+
+-- Actualizar Videojuego:
+
+create procedure actualizarV (
+@IdV int,
+@nombreV varchar(70),
+@precio int
+)
+as
+begin
+update Videojuegos set
+Nombre = @Nombre,
+Precio = @Precio
+where IdV = @IdV
+end
+
+-- Eliminar Videojuego:
+
+create procedure eliminarV (
+@IdV int
+)
+as
+begin
+delete from Videojuegos where IdV = @IdV
+end
+
+-- Consultar Videojuego:
+
+create procedure obtenerV
+@IdV int 
+as
+begin
+select * from Videojuegos where IdV = @IdV
+end
+
+-- Listar Videojuegos:
+
+create procedure listarV
+as
+begin
+select * from Videojuegos
+end
+
+--------------------------------------------------------------
+
+-- Tabla Compras:
+
+create table Compras (
+idC int,
+fkidU int,
+fkidV int,
+fechaC datetime default getdate()
+foreign key (fkidU) references Usuario(idU),
+foreign key (fkidV) references Videojuegos(IdV),
+primary key (fkidU,fkidV)
+);
+
+-- Procedimineto almacenado:
+-- Este procedimiento nos permitirá obtener las compras de los usuarios con su fecha.
+
+CREATE PROCEDURE ObtenerComprasDeUsuario (
+@idU
+)
+BEGIN
+    SELECT Usuarios.nombreU AS usuario, Videojuegos.nombreV AS videojuego, Compras.fecha
+    FROM Compras
+    JOIN Usuarios ON Compras.idU = Usuarios.idU
+    JOIN Videojuegos ON Compras.idV = Videojuegos.idV
+    WHERE Usuarios.idU = @idU;
+END
+
+-- Ahora los procedimientos almacenados:
+-- Registrar Compra:
+
+create procedure registrarC (
+@idC int,
+@fkidU int,
+@fkidV int
+)
+as
+begin
+insert into Compras (idC, fkidU, fkidV)
+values
+(
+@idC,
+@fkidU,
+@fkidV
+)
+end
+
+-- Actualizar Compra:
+
+create procedure actualizarC (
+@idC int,
+@fkidU int,
+@fkidV int,
+@fecha datetime
+)
+as
+begin
+update Compras set
+fkidU = @fkidU,
+fkidV = @fkidV,
+fechaC = @fecha
+where idC = @idC
+end
+
+-- Eliminar Compra:
+
+create procedure eliminarC (
+@idC Int
+)
+as
+begin
+delete from Compras where idC = @idC
+end
+
+-- Consultar Compra:
+
+create procedure obtenerC
+@idC Int
+as
+begin
+select * from Compras where idC = @idC
+end
+
+-- Listar Compra:
+
+create procedure listarC
+as
+begin
+select * from Compras
+end

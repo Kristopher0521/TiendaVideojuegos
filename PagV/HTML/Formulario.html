@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Registro</title>
+    <link rel="stylesheet" href="../Css/Register.css">
+</head>
+<body>
+    <!-- Contenedor para el formulario modal -->
+    <div id="form-container" class="modal-container">
+        <div class="modal-content">
+            <!-- Botón para cerrar el formulario modal -->
+            <span id="closeModalBtn" class="close-modal-btn" onclick="closeForm()">&times;</span>
+            <h2>Formulario Registro</h2>
+            <form id="form" class="form-register">
+                <input class="controls" type="text" name="idP" id="idP" placeholder="Ingrese el id">
+                <input class="controls" type="text" name="Nombre" id="Nombre" placeholder="Ingrese el Nombre">
+                <input class="controls" type="text" name="Precio" id="Precio" placeholder="Ingrese el Precio">
+                <p>Estoy de acuerdo con <a href="#">Términos y Condiciones</a></p>
+                <input class="botons" type="submit" value="Registrar">
+                <p><a href="#">¿Ya tengo Cuenta?</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="../Js/POST.js"></script>
+</body>
+</html>
